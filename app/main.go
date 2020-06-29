@@ -10,8 +10,10 @@ import (
 var e = createMux()
 
 func main() {
+     // `/` というパス（URL）と `articleIndex` という処理を結びつける
 	e.GET("/", articleIndex)
 
+     // Webサーバーをポート番号 8080 で起動する
 	e.Logger.Fatal(e.Start(":8082"))
 }
 
@@ -29,5 +31,6 @@ func createMux() *echo.Echo {
 }
 
 func articleIndex(c echo.Context) error {
+     // ステータスコード 200 で、"Hello, World!" という文字列をレスポンス
 	return c.String(http.StatusOK, "Hello, World!")
 }
