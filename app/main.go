@@ -1,11 +1,16 @@
 package main
 
 import (
-	"net/http"
+     "net/http"
+     "time"
 
+     "github.com/flosch/pongo2"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
+
+// テンプレートファイルを配置するディレクトリへの相対パス
+const tmplPath = "src/template/"
 
 var e = createMux()
 
@@ -31,6 +36,27 @@ func createMux() *echo.Echo {
 }
 
 func articleIndex(c echo.Context) error {
-     // ステータスコード 200 で、"Hello, World!" という文字列をレスポンス
-	return c.String(http.StatusOK, "Hello, World!")
+     data := map[string]interface{}{
+          "Message": "Hello, World!",
+          "Now":     time.Now(),
+     }
+     return render(c, "article/index.html", data)
+}
+
+// pongo2 を利用して、テンプレートファイルとデータから HTML を生成
+func htmlBlob(file string, data map[string]interface{}) ([]byte, error) {
+     return pongo2.Must(pongo2.FromCache(tmplPath + file)).ExecuteBytes(data)
+}
+
+func render(c echo.Context, file string, data map[string]interface{}) error {
+     // 定義した htmlBlob() 関数を呼び出し、生成された HTML をバイトデータとして受け取る
+     b, err := htmlBlob(file, data)
+
+     // エラーチェック
+     if err != nil {
+          return c.NoContent(http.StatusInternalServerError)
+     }
+
+     // ステータスコード 200 で HTML データをレスポンス
+     return c.HTMLBlob(http.StatusOK, b)
 }
