@@ -19,7 +19,7 @@ func main() {
 	e.GET("/", articleIndex)
 
      // Webサーバーをポート番号 8080 で起動する
-	e.Logger.Fatal(e.Start(":8082"))
+	e.Logger.Fatal(e.Start(":8080"))
 }
 
 func createMux() *echo.Echo {
