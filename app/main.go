@@ -29,7 +29,9 @@ func createMux() *echo.Echo {
      // アプリケーションに各種ミドルウェアを設定
 	e.Use(middleware.Recover())
 	e.Use(middleware.Logger())
-	e.Use(middleware.Gzip())
+     e.Use(middleware.Gzip())
+     
+     e.Static("/css", "src/css")
 
      // アプリケーションインスタンスを返却
 	return e
