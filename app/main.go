@@ -25,6 +25,7 @@ func main() {
      e.GET("/new", handler.ArticleNew)
      e.GET("/:id", handler.ArticleShow)
      e.GET("/:id/edit", handler.ArticleEdit)
+     e.POST("/", handler.ArticleCreate)
 
      // Webサーバーをポート番号 8080 で起動する
 	e.Logger.Fatal(e.Start(":8080"))
