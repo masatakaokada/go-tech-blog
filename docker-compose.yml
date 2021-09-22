@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:8080
     environment: 
-      DSN: "root:password@tcp(docker.for.mac.localhost:3306)/techblog?parseTime=true&autocommit=0&sql_mode=%27TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY%27"
+      DSN: "root:password@tcp(mysql:3306)/techblog"
     volumes:
       - .:/go/src
     working_dir: /go/src/app
@@ -16,6 +16,7 @@ services:
   mysql:
     image: mysql:8
     container_name: go-tech-blog-mysql
+    command: --default-authentication-plugin=mysql_native_password
     ports:
       - "3306:3306"
     environment:
