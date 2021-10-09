@@ -1,0 +1,2 @@
+web: app
+release: goose -env production up

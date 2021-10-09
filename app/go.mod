@@ -1,3 +1,5 @@
+// +heroku install bitbucket.org/liamstask/goose/cmd/goose ./...
+
 module app
 
 go 1.14

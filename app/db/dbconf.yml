@@ -1,3 +1,7 @@
 development:
   driver: mysql
   open: root:password@tcp(docker.for.mac.localhost:3306)/techblog
+
+production:
+  driver: mymysql
+  open: $GOOSE_CONNECTION

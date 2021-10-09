@@ -35,7 +35,11 @@ func main() {
 	e.PATCH("/api/articles/:articleID", handler.ArticleUpdate) // 更新
 
 	// Webサーバーをポート番号 8080 で起動する
-	e.Logger.Fatal(e.Start(":8080"))
+	port := os.Getenv("PORT")
+	if port == "" {
+		e.Logger.Fatal("$PORT must be set")
+	}
+	e.Logger.Fatal(e.Start(":" + port))
 }
 
 func connectDB() *sqlx.DB {
