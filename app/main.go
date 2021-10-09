@@ -26,8 +26,8 @@ func main() {
 
 	e.GET("/articles", handler.ArticleIndex)
 	e.GET("/articles/new", handler.ArticleNew)
-	e.GET("/articles/:id", handler.ArticleShow)
-	e.GET("/articles/:id/edit", handler.ArticleEdit)
+	e.GET("/articles/:articleID", handler.ArticleShow)
+	e.GET("/articles/:articleID/edit", handler.ArticleEdit)
 
 	e.GET("/api/articles", handler.ArticleList)
 	e.POST("/api/articles", handler.ArticleCreate)
