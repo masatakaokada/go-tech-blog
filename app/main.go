@@ -32,6 +32,7 @@ func main() {
 	e.GET("/api/articles", handler.ArticleList)
 	e.POST("/api/articles", handler.ArticleCreate)
 	e.DELETE("/api/articles/:articleID", handler.ArticleDelete)
+	e.PATCH("/api/articles/:articleID", handler.ArticleUpdate) // 更新
 
 	// Webサーバーをポート番号 8080 で起動する
 	e.Logger.Fatal(e.Start(":8080"))

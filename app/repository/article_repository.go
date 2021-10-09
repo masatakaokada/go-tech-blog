@@ -107,3 +107,37 @@ func ArticleGetByID(id int) (*model.Article, error) {
 	// エラーがない場合は記事データを返却します。
 	return &article, nil
 }
+
+// ArticleUpdate ...
+func ArticleUpdate(article *model.Article) (sql.Result, error) {
+	now := time.Now()
+	article.Updated = now
+
+	query := `UPDATE articles
+	SET title = :title,
+			body = :body,
+			updated = :updated
+	WHERE id = :id;`
+
+	// トランザクションを開始します。
+	tx := db.MustBegin()
+
+	// クエリ文字列内の :title, :body, :id には、
+	// 第 2 引数の Article 構造体の Title, Body, ID が bind されます。
+	// 構造体に db タグで指定した値が紐付けされます。
+	res, err := tx.NamedExec(query, article)
+
+	if err != nil {
+		// エラーが発生した場合はロールバックします。
+		tx.Rollback()
+
+		// エラーを返却します。
+		return nil, err
+	}
+
+	// エラーがない場合はコミットします。
+	tx.Commit()
+
+	// SQL の実行結果を返却します。
+	return res, nil
+}
